@@ -7,14 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Admin
-
-
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard.index');
-})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
-
-
 
 
 

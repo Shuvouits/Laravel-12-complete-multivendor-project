@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -42,6 +43,15 @@ Route::middleware('auth:admin')
 ->prefix('admin')
 ->as('admin.')
 ->group(function () {
+
+//Admin
+
+
+
+
+ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

@@ -791,26 +791,25 @@
                 </a>
 
 
-              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-    <a href="#" class="dropdown-item">Status</a>
-    <a href="" class="dropdown-item">Profile</a>
-    <a href="#" class="dropdown-item">Feedback</a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <a href="#" class="dropdown-item">Status</a>
+                    <a href="" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Feedback</a>
 
-    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
 
-    <a href="" class="dropdown-item">Settings</a>
+                    <a href="" class="dropdown-item">Settings</a>
 
-    <!-- ✅ Logout -->
-    <form method="POST" action="{{ route('admin.logout') }}">
-        @csrf
+                    <!-- ✅ Logout -->
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
 
-        <a href="#"
-           class="dropdown-item"
-           onclick="event.preventDefault(); this.closest('form').submit();">
-            Logout
-        </a>
-    </form>
-</div>
+                        <a href="#" class="dropdown-item"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            Logout
+                        </a>
+                    </form>
+                </div>
 
 
 

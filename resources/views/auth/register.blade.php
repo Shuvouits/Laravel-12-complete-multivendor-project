@@ -61,36 +61,55 @@
 @extends('frontend.master')
 
 @section('content')
-
 <main class="main pages">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
-                <span></span> Pages <span></span> My Account
+                <a href="{{ url('/') }}" rel="nofollow">
+                    <i class="fi-rs-home mr-5"></i>Home
+                </a>
+                <span></span> Pages <span></span> Register
             </div>
         </div>
     </div>
 
-    <div class="page-content pt-50 pb-40">
+    <div class="page-content pt-150 pb-135">
         <div class="container">
             <div class="row">
-                <div class="col-xxl-8 col-xl-10 col-lg-12 col-md-9 m-auto">
-                    <div class="row align-items-center">
+                <div class="col-xl-8 col-lg-10 col-md-12 m-auto">
+                    <div class="row">
 
-                        <!-- Register Form -->
-                        <div class="col-lg-6 offset-md-3">
+                        <!-- Left Image -->
+                        <div class="col-lg-6 pr-30 d-none d-lg-block">
+                            <img class="border-radius-15"
+                                 src="{{ asset('frontend/assets/imgs/page/login-1.png') }}"
+                                 alt="" />
+                        </div>
+
+                        <!-- Right Form -->
+                        <div class="col-lg-6 col-md-8">
                             <div class="login_wrap widget-taber-content background-white">
                                 <div class="padding_eight_all bg-white">
+
                                     <div class="heading_s1">
-                                        <h2 class="mb-5">Create an Account</h2>
+                                        <h1 class="mb-5">Create Account</h1>
                                         <p class="mb-30">
                                             Already have an account?
-                                            <a href="{{ route('login') }}">Login</a>
+                                            <a href="{{ route('login') }}">Login here</a>
                                         </p>
                                     </div>
 
-                                    <!-- Laravel Register Form -->
+                                    <!-- Validation Errors -->
+                                    @if ($errors->any())
+                                        <div class="mb-4">
+                                            <ul class="list-disc list-inside text-red-600">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
                                     <form method="POST" action="{{ route('register') }}">
                                         @csrf
 
@@ -99,12 +118,10 @@
                                             <input type="text"
                                                    name="name"
                                                    value="{{ old('name') }}"
-                                                   required autofocus
-                                                   placeholder="Username"
-                                                   class="form-control @error('name') is-invalid @enderror" />
-                                            @error('name')
-                                                <span class="text-danger mt-2 d-block">{{ $message }}</span>
-                                            @enderror
+                                                   required
+                                                   autofocus
+                                                   placeholder="Full Name *"
+                                                   class="form-control" />
                                         </div>
 
                                         <!-- Email -->
@@ -113,11 +130,8 @@
                                                    name="email"
                                                    value="{{ old('email') }}"
                                                    required
-                                                   placeholder="Email"
-                                                   class="form-control @error('email') is-invalid @enderror" />
-                                            @error('email')
-                                                <span class="text-danger mt-2 d-block">{{ $message }}</span>
-                                            @enderror
+                                                   placeholder="Email Address *"
+                                                   class="form-control" />
                                         </div>
 
                                         <!-- Password -->
@@ -125,11 +139,8 @@
                                             <input type="password"
                                                    name="password"
                                                    required
-                                                   placeholder="Password"
-                                                   class="form-control @error('password') is-invalid @enderror" />
-                                            @error('password')
-                                                <span class="text-danger mt-2 d-block">{{ $message }}</span>
-                                            @enderror
+                                                   placeholder="Password *"
+                                                   class="form-control" />
                                         </div>
 
                                         <!-- Confirm Password -->
@@ -137,56 +148,23 @@
                                             <input type="password"
                                                    name="password_confirmation"
                                                    required
-                                                   placeholder="Confirm password"
+                                                   placeholder="Confirm Password *"
                                                    class="form-control" />
                                         </div>
 
-
-
-
-                                        <!-- User Type -->
-
-                                        {{--
-
-                                         <div class="payment_option mb-30">
-                                            <div class="custome-radio">
-                                                <input class="form-check-input"
-                                                       type="radio"
-                                                       name="user_type"
-                                                       id="customerRadio"
-                                                       value="customer"
-                                                       checked />
-                                                <label class="form-check-label" for="customerRadio">
-                                                    I am a customer
-                                                </label>
-                                            </div>
-                                            <div class="custome-radio">
-                                                <input class="form-check-input"
-                                                       type="radio"
-                                                       name="user_type"
-                                                       id="vendorRadio"
-                                                       value="vendor" />
-                                                <label class="form-check-label" for="vendorRadio">
-                                                    I am a vendor
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        --}}
-
-
-                                        <!-- Submit Button -->
-                                        <div class="form-group mb-0">
+                                        <div class="form-group">
                                             <button type="submit"
-                                                    class="btn btn-fill-out btn-block hover-up font-weight-bold">
-                                                Submit & Register
+                                                class="btn btn-heading btn-block hover-up">
+                                                Register
                                             </button>
                                         </div>
+
                                     </form>
+
                                 </div>
                             </div>
                         </div>
-
+                        <!-- End Right -->
 
                     </div>
                 </div>
@@ -194,5 +172,9 @@
         </div>
     </div>
 </main>
-
 @endsection
+
+
+
+
+

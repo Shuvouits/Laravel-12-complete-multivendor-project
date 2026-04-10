@@ -1156,3 +1156,38 @@
         checkItems();
     });
 </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    const appToast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3200,
+        timerProgressBar: true,
+        customClass: {
+            popup: 'custom-toast'
+        },
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
+</script>
+
+@if(session('toast'))
+    <script>
+        const toastData = @json(session('toast'));
+
+        appToast.fire({
+            icon: toastData.type || 'success',
+            title: toastData.title || 'Done',
+            html: toastData.message || '',
+            timer: toastData.timer || 3200
+        });
+    </script>
+@endif
+
+@stack('scripts')

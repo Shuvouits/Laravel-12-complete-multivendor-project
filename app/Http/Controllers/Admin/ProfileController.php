@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    //
+
     use FileUploadTrait;
 
-    public function edit(Request $request): View
+    public function index()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view('admin.profile.index');
     }
 
     public function profileUpdate(Request $request): RedirectResponse
@@ -28,11 +23,11 @@ class ProfileController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'email', 'unique:users,email,'.auth('web')->user()->id],
+            'email' => ['required', 'email', 'unique:admins,email,'.auth('admin')->user()->id],
             'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
 
-        $user = auth('web')->user();
+        $user = auth('admin')->user();
         if ($request->hasFile('avatar')) {
             $filepath = $this->uploadFile($request->file('avatar'), $user->avatar);
             $filepath ? $user->avatar = $filepath : null;
@@ -48,49 +43,21 @@ class ProfileController extends Controller
         ]);
     }
 
-    function passwordUpdate(Request $request): RedirectResponse
+    public function passwordUpdate(Request $request): RedirectResponse
     {
         $request->validate([
             'current_password' => ['required', 'string', 'current_password'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $user = auth('web')->user();
+        $user = auth('admin')->user();
         $user->password = bcrypt($request->password);
         $user->save();
 
-
-          return redirect()->back()->with('toast', [
+        return redirect()->back()->with('toast', [
             'type' => 'success',
             'title' => 'Success',
             'message' => 'Password updated successfully!',
         ]);
     }
-
-    /**
-     * Update the user's profile information.
-     */
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
-
-
 }

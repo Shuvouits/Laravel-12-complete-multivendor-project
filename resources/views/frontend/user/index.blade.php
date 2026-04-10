@@ -51,10 +51,19 @@
                                                 href="#wishlist-tab" role="tab" aria-controls="wishlist-tab"
                                                 aria-selected="true"><i class="fi-rs-heart mr-10"></i> Wishlist</a>
                                         </li>
+
+
                                         <li class="nav-item">
-                                            <a class="nav-link" href="login.html"><i
-                                                    class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                                @csrf
+                                                <a class="nav-link" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    <i class="fi-rs-sign-out mr-10"></i>Logout
+                                                </a>
+                                            </form>
                                         </li>
+
+
                                     </ul>
                                 </div>
                             </div>
@@ -122,5 +131,4 @@
 
         });
     </script>
-
 @endpush

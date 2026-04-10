@@ -33,18 +33,21 @@ class RedirectIfAuthenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
+
     public function handle(Request $request, Closure $next, string ...$guards): Response
-    {
-        $guards = empty($guards) ? [null] : $guards;
+{
+    $guards = empty($guards) ? ['web'] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect($this->redirectTo($request, $guard));
-            }
+    foreach ($guards as $guard) {
+        if (Auth::guard($guard)->check()) {
+            return redirect($this->redirectTo($request, $guard));
         }
-
-        return $next($request);
     }
+
+    return $next($request);
+}
+
+
 
     /**
      * Get the path the user should be redirected to when they are authenticated.

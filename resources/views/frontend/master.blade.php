@@ -21,20 +21,20 @@
 
 
 
-   
+   @flasher_render
 
     @include('frontend.section.footer')
 
-    
+
     <!-- Preloader Start -->
 
     @include('frontend.section.preloader')
 
     @include('frontend.section.script')
 
-    
 
-    
+
+
 </body>
 
 </html>

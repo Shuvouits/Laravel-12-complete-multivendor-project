@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -17,42 +18,27 @@ class RedirectIfAuthenticated
     protected static $redirectToCallback;
 
     /**
-     * Specify the guards for the middleware.
-     *
-     * @param  string  $guard
-     * @param  string  $others
-     * @return string
-     */
-    public static function using($guard, ...$others)
-    {
-        return static::class.':'.implode(',', [$guard, ...$others]);
-    }
-
-    /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-
     public function handle(Request $request, Closure $next, string ...$guards): Response
-{
-    $guards = empty($guards) ? ['web'] : $guards;
+    {
+        $guards = empty($guards) ? [null] : $guards;
 
-    foreach ($guards as $guard) {
-        if (Auth::guard($guard)->check()) {
-            return redirect($this->redirectTo($request, $guard));
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return redirect($this->redirectTo($request, $guard));
+            }
         }
+
+        return $next($request);
     }
-
-    return $next($request);
-}
-
-
 
     /**
      * Get the path the user should be redirected to when they are authenticated.
      */
-    protected function redirectTo(Request $request, string $guard = 'web'): ?string
+    protected function redirectTo(Request $request, string|null $guard = 'web'): ?string
     {
         return static::$redirectToCallback
             ? call_user_func(static::$redirectToCallback, $request)
@@ -62,11 +48,14 @@ class RedirectIfAuthenticated
     /**
      * Get the default URI the user should be redirected to when they are authenticated.
      */
-    protected function defaultRedirectUri($guard): string
+    protected function defaultRedirectUri(string|null $guard): string
     {
-        if ($guard == 'admin') {
+
+        if($guard == 'admin'){
             return route('admin.dashboard');
-        }if ($guard == 'web') {
+        }
+
+        if($guard == 'web' || $guard == null){
             return route('dashboard');
         }
 
@@ -76,6 +65,7 @@ class RedirectIfAuthenticated
     /**
      * Specify the callback that should be used to generate the redirect path.
      *
+     * @param  callable  $redirectToCallback
      * @return void
      */
     public static function redirectUsing(callable $redirectToCallback)

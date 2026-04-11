@@ -11,7 +11,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 // User
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'user_role:user' ]], function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
     /** Profile Routes */

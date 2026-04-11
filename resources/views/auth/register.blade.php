@@ -109,60 +109,54 @@
                                         @endif
 
                                         <form method="POST" action="{{ route('register') }}">
-    @csrf
+                                            @csrf
 
-    <div class="form-group">
-        <input type="text" name="name" value="{{ old('name') }}" required autofocus placeholder="Full Name *" class="form-control" />
-    </div>
+                                            <div class="form-group">
+                                                <input type="text" name="name" value="{{ old('name') }}" required
+                                                    autofocus placeholder="Full Name *" class="form-control" />
+                                            </div>
 
-    <div class="form-group">
-        <input type="email" name="email" value="{{ old('email') }}" required placeholder="Email Address *" class="form-control" />
-    </div>
+                                            <div class="form-group">
+                                                <input type="email" name="email" value="{{ old('email') }}" required
+                                                    placeholder="Email Address *" class="form-control" />
+                                            </div>
 
-    <div class="form-group">
-        <input type="password" name="password" required placeholder="Password *" class="form-control" />
-    </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password" required placeholder="Password *"
+                                                    class="form-control" />
+                                            </div>
 
-    <div class="form-group">
-        <input type="password" name="password_confirmation" required placeholder="Confirm Password *" class="form-control" />
-    </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password_confirmation" required
+                                                    placeholder="Confirm Password *" class="form-control" />
+                                            </div>
 
-    <div class="payment_option mb-30">
-        <div class="custome-radio">
-            <input
-                class="form-check-input"
-                type="radio"
-                name="user_type"
-                id="exampleRadios3"
-                value="user"
-                {{ old('user_type', 'user') == 'user' ? 'checked' : '' }}
-            />
-            <label class="form-check-label" for="exampleRadios3">
-                I am a customer
-            </label>
-        </div>
+                                            <div class="payment_option mb-30">
+                                                <div class="custome-radio">
+                                                    <input class="form-check-input" type="radio" name="user_type"
+                                                        id="exampleRadios3" value="user"
+                                                        {{ old('user_type', 'user') == 'user' ? 'checked' : '' }} />
+                                                    <label class="form-check-label" for="exampleRadios3">
+                                                        I am a customer
+                                                    </label>
+                                                </div>
 
-        <div class="custome-radio">
-            <input
-                class="form-check-input"
-                type="radio"
-                name="user_type"
-                id="exampleRadios4"
-                value="vendor"
-                {{ old('user_type') == 'vendor' ? 'checked' : '' }}
-            />
-            <label class="form-check-label" for="exampleRadios4">
-                I am a vendor
-            </label>
-        </div>
-    </div>
+                                                <div class="custome-radio">
+                                                    <input class="form-check-input" type="radio" name="user_type"
+                                                        id="exampleRadios4" value="vendor"
+                                                        {{ old('user_type') == 'vendor' ? 'checked' : '' }} />
+                                                    <label class="form-check-label" for="exampleRadios4">
+                                                        I am a vendor
+                                                    </label>
+                                                </div>
+                                            </div>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-heading btn-block hover-up">
-            Register
-        </button>
-    </div>
-</form>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-heading btn-block hover-up">
+                                                    Register
+                                                </button>
+                                            </div>
+                                        </form>
 
                                     </div>
                                 </div>

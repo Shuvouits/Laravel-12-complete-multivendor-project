@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\KycRequestController;
 use App\Http\Controllers\admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,10 +50,18 @@ Route::middleware('auth:admin')
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-           /** Profile Routes */
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
-    Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
+        /** Profile Routes */
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+        Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
+
+         /** Kyc routes */
+        Route::get('/kyc-requests', [KycRequestController::class, 'index'])->name('kyc.index');
+        Route::get('/kyc-requests/pending', [KycRequestController::class, 'pending'])->name('kyc.pending');
+        Route::get('/kyc-requests/rejected', [KycRequestController::class, 'rejected'])->name('kyc.rejected');
+        Route::get('/kyc-requests/{kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
+        Route::get('/kyc-requests/download/{kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
+        Route::put('/kyc-requests/{kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
 
         Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');

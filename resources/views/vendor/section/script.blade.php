@@ -1,3 +1,7 @@
+
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <!-- BEGIN PAGE LIBRARIES -->
 <script src="{{ asset('admin/dist/libs/apexcharts/dist/apexcharts.min.js') }}" defer></script>
 <script src="{{ asset('admin/dist/libs/jsvectormap/dist/jsvectormap.min.js') }}" defer></script>
@@ -87,7 +91,7 @@
     });
 </script>
 
-@if(session('toast'))
+@if (session('toast'))
     <script>
         const toastData = @json(session('toast'));
 
@@ -99,5 +103,91 @@
         });
     </script>
 @endif
+
+ <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            function readImage(input, previewId) {
+                if (input.files && input.files[0]) {
+                    let reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $(previewId).attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $('#logoInput').on('change', function() {
+                readImage(this, '#logoPreview');
+            });
+
+            $('#bannerInput').on('change', function() {
+                readImage(this, '#bannerPreview');
+            });
+        });
+
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: 'Enter long description...',
+            modules: {
+                toolbar: [
+                    [{
+                        font: []
+                    }, {
+                        size: ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        header: [1, 2, 3, 4, 5, 6, false]
+                    }],
+
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{
+                        color: []
+                    }, {
+                        background: []
+                    }],
+                    [{
+                        script: 'sub'
+                    }, {
+                        script: 'super'
+                    }],
+
+                    [{
+                        list: 'ordered'
+                    }, {
+                        list: 'bullet'
+                    }, {
+                        list: 'check'
+                    }],
+                    [{
+                        indent: '-1'
+                    }, {
+                        indent: '+1'
+                    }],
+                    [{
+                        align: []
+                    }, {
+                        direction: 'rtl'
+                    }],
+
+                    ['blockquote', 'code-block'],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                ]
+            }
+        });
+
+        document.getElementById('storeForm').addEventListener('submit', function() {
+            document.getElementById('long_description').value = quill.root.innerHTML;
+        });
+    </script>
+
+
 
 @stack('scripts')

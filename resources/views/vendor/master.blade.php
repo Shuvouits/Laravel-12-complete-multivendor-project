@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" data-bs-theme="dark" data-bs-theme-base="stone">
 
 <head>
     <meta charset="utf-8" />

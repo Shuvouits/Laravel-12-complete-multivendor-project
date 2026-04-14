@@ -22,6 +22,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
+    /*
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
@@ -31,6 +32,21 @@ class AuthenticatedSessionController extends Controller
         if(auth('web')->user()->user_type == 'vendor') return redirect()->intended(route('vendor.dashboard', absolute: false));
 
         return redirect()->intended(route('dashboard', absolute: false));
+    }  */
+
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        $user = $request->user();
+
+        if ($user->user_type === 'vendor') {
+            return redirect()->route('vendor.dashboard');
+        }
+
+        return redirect()->route('dashboard');
     }
 
     /**

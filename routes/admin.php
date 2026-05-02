@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\KycRequestController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\backend\RoleController;
+use App\Http\Controllers\backend\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -41,46 +43,52 @@ Route::middleware('guest:admin')
             ->name('password.store');
     });
 
-Route::middleware('auth:admin')
-    ->prefix('admin')
-    ->as('admin.')
-    ->group(function () {
+Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function () {
 
-        // Admin
+    // Admin
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        /** Profile Routes */
-        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-        Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
-        Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
+    /** Profile Routes */
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
 
-         /** Kyc routes */
-        Route::get('/kyc-requests', [KycRequestController::class, 'index'])->name('kyc.index');
-        Route::get('/kyc-requests/pending', [KycRequestController::class, 'pending'])->name('kyc.pending');
-        Route::get('/kyc-requests/rejected', [KycRequestController::class, 'rejected'])->name('kyc.rejected');
-        Route::get('/kyc-requests/{kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
-        Route::get('/kyc-requests/download/{kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
-        Route::put('/kyc-requests/{kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
+    /** Kyc routes */
+    Route::get('/kyc-requests', [KycRequestController::class, 'index'])->name('kyc.index');
+    Route::get('/kyc-requests/pending', [KycRequestController::class, 'pending'])->name('kyc.pending');
+    Route::get('/kyc-requests/rejected', [KycRequestController::class, 'rejected'])->name('kyc.rejected');
+    Route::get('/kyc-requests/{kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
+    Route::get('/kyc-requests/download/{kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
+    Route::put('/kyc-requests/{kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
 
-        Route::get('verify-email', EmailVerificationPromptController::class)
-            ->name('verification.notice');
 
-        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-            ->middleware(['signed', 'throttle:6,1'])
-            ->name('verification.verify');
 
-        Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-            ->middleware('throttle:6,1')
-            ->name('verification.send');
+    Route::get('verify-email', EmailVerificationPromptController::class)
+        ->name('verification.notice');
 
-        Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-            ->name('password.confirm');
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
 
-        Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
 
-        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+        ->name('password.confirm');
 
-        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-            ->name('logout');
-    });
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+
+    /** Role Routes */
+    Route::resource('/role', RoleController::class);
+    Route::resource('/role-users', UserRoleController::class);
+
+});
+
+

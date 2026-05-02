@@ -245,35 +245,75 @@
                  </li>
 
 
-                 <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
-                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                         data-bs-auto-close="false" role="button" aria-expanded="false">
-                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                             <i class="ti ti-user-check"></i>
-                         </span>
-                         <span class="nav-link-title"> KYC Requests </span>
-                     </a>
-                     <div class="dropdown-menu {{ setActive(['admin.kyc.*'], 'show') }}">
-                         <div class="dropdown-menu-columns">
-                             <div class="dropdown-menu-column">
-                                 <a class="dropdown-item {{ setActive(['admin.kyc.index']) }}"
-                                     href="{{ route('admin.kyc.index') }}">
-                                     All Requests
-                                 </a>
-                                 <a class="dropdown-item {{ setActive(['admin.kyc.pending']) }}"
-                                     href="{{ route('admin.kyc.pending') }}">
-                                     Pending Requests
-                                 </a>
-                                 <a class="dropdown-item {{ setActive(['admin.kyc.rejected']) }}"
-                                     href="{{ route('admin.kyc.rejected') }}">
-                                     Rejected Requests
-                                 </a>
+
+                 @if (hasPermission(['KYC Management']))
+                     <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
+                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                             data-bs-auto-close="false" role="button" aria-expanded="false">
+                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                 <i class="ti ti-user-check"></i>
+                             </span>
+                             <span class="nav-link-title"> KYC Requests </span>
+                         </a>
+                         <div class="dropdown-menu {{ setActive(['admin.kyc.*'], 'show') }}">
+                             <div class="dropdown-menu-columns">
+                                 <div class="dropdown-menu-column">
+                                     <a class="dropdown-item {{ setActive(['admin.kyc.index']) }}"
+                                         href="{{ route('admin.kyc.index') }}">
+                                         All Requests
+                                     </a>
+                                     <a class="dropdown-item {{ setActive(['admin.kyc.pending']) }}"
+                                         href="{{ route('admin.kyc.pending') }}">
+                                         Pending Requests
+                                     </a>
+                                     <a class="dropdown-item {{ setActive(['admin.kyc.rejected']) }}"
+                                         href="{{ route('admin.kyc.rejected') }}">
+                                         Rejected Requests
+                                     </a>
+
+                                 </div>
 
                              </div>
-
                          </div>
-                     </div>
-                 </li>
+                     </li>
+                 @endif
+
+
+
+                 @if (hasPermission(['Role Management', 'Role User Management']))
+                     <li class="nav-item dropdown {{ setActive(['admin.role.*', 'admin.role-users.*']) }}">
+                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                             data-bs-auto-close="false" role="button" aria-expanded="false">
+                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                 <i class="ti ti-shield"></i>
+                             </span>
+                             <span class="nav-link-title"> Access Management </span>
+                         </a>
+                         <div class="dropdown-menu {{ setActive(['admin.role.*', 'admin.role-users.*'], 'show') }}">
+                             <div class="dropdown-menu-columns">
+                                 @if (hasPermission(['Role Management']))
+                                     <div class="dropdown-menu-column">
+                                         <a class="dropdown-item {{ setActive(['admin.role.*']) }}"
+                                             href="{{ route('admin.role.index') }}">
+                                             Role
+                                         </a>
+                                     </div>
+                                 @endif
+
+                                 @if (hasPermission(['Role User Management']))
+                                     <div class="dropdown-menu-column">
+                                         <a class="dropdown-item {{ setActive(['admin.role-users.*']) }}"
+                                             href="{{ route('admin.role-users.index') }}">
+                                             Role Users
+                                         </a>
+                                     </div>
+                                 @endif
+
+                             </div>
+                         </div>
+                     </li>
+                 @endif
+
 
 
 

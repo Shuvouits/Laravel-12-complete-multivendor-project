@@ -8,6 +8,14 @@
 
     @include('admin.section.link')
 
+    <style>
+        *,
+        *::before,
+        *::after {
+            font-family: 'Comic Sans MS', cursive, sans-serif !important;
+        }
+    </style>
+
 
 </head>
 

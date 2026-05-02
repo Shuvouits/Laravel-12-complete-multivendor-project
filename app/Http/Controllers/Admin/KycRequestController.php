@@ -1,16 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\KYC;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class KycRequestController extends Controller
+class KycRequestController extends Controller implements HasMiddleware
 {
     //
+
+    public static function Middleware(): array
+    {
+        return [
+            new Middleware('permission:KYC Management'),
+        ];
+    }
 
     public function index()
     {
@@ -62,8 +71,6 @@ class KycRequestController extends Controller
                 body: 'Sorry! Your KYC Application Has Been Rejected.'
             );
         }
-
-
 
         return redirect()->route('admin.kyc.index');
     }

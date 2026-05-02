@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('content')
-    <div class="container-xl">
+    <div class="container-xl mt-5">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Rejected KYC Requests</h3>

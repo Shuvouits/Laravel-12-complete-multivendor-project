@@ -1,0 +1,153 @@
+<?php
+
+namespace App\Http\Controllers\backend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Illuminate\Routing\Controllers\HasMiddleware;
+
+class RoleController extends Controller implements HasMiddleware
+{
+    //
+
+    /**
+     * Display a listing of the resource.
+     */
+    public static function Middleware(): array
+    {
+        return [
+            new Middleware('permission:Role Management'),
+        ];
+    }
+
+    public function index(): View
+    {
+        $roles = Role::withCount('permissions')->get();
+
+        return view('admin.role.index', compact('roles'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        $permissions = Permission::all()->groupBy('group_name');
+
+        return view('admin.role.create', compact('permissions'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+
+
+     public function store(Request $request)
+    {
+        $request->validate([
+            'role' => ['required', 'string', 'max:255', 'unique:roles,name'],
+            'permissions' => ['required', 'array']
+        ]);
+
+        $role = Role::create(['name' => $request->role, 'guard_name' => 'admin']);
+        $role->syncPermissions($request->permissions);
+
+         return to_route('admin.role.index')->with('toast', [
+                'type' => 'success',
+                'title' => 'Success',
+                'message' => 'Role created successfully!',
+            ]);
+
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Role $role)
+    {
+        $permissions = Permission::all()->groupBy('group_name');
+
+        return view('admin.role.edit', compact('role', 'permissions'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Role $role)
+    {
+        if ($role->name == 'Super Admin') {
+            //  AlertService::error('You can not update Super Admin role.');
+
+            return redirect()->back()->with('toast', [
+                'type' => 'error',
+                'title' => 'Error',
+                'message' => 'You can not update Super Admin role.',
+            ]);
+
+            return to_route('admin.role.index');
+        }
+
+        $request->validate([
+            'role' => ['required', 'string', 'max:255', 'unique:roles,name,'.$role->id],
+            'permissions' => ['required', 'array'],
+        ]);
+
+        $role->update(['name' => $request->role]);
+        $role->syncPermissions($request->permissions);
+
+        // AlertService::updated();
+
+        return redirect()->back()->with('toast', [
+            'type' => 'success',
+            'title' => 'Success',
+            'message' => 'Data updated successfully!',
+        ]);
+
+        return to_route('admin.role.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Role $role): JsonResponse
+    {
+        if ($role->name == 'Super Admin') {
+            return response()->json(['status' => 'error', 'message' => 'You can not delete Super Admin role.']);
+        }
+
+        try {
+            DB::beginTransaction();
+            // remove role user
+            $role->users()->detach();
+            // detach permission from role
+            $role->permissions()->detach();
+            $role->delete();
+            DB::commit();
+
+            // AlertService::deleted();
+
+            return response()->json(['status' => 'success', 'message' => 'Deleted Successfully']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error('Role Delete Error: ', $th);
+
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+}

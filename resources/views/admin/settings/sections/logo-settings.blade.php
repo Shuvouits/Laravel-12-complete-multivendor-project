@@ -12,11 +12,15 @@
                 <div class="col-md-6">
                     <div class="form-label">Site Logo</div>
 
-                    @if(config('settings.site_logo'))
+                    @if(!empty($settings['site_logo']))
                         <div class="mb-3">
-                            <img src="{{ asset(config('settings.site_logo')) }}"
+                            <img src="{{ asset($settings['site_logo']) }}"
                                  alt="Site Logo"
                                  style="max-width: 180px; height: auto; border: 1px solid #ddd; padding: 8px; border-radius: 6px;">
+                        </div>
+                    @else
+                        <div class="mb-3 text-muted">
+                            No logo uploaded yet.
                         </div>
                     @endif
 
@@ -31,11 +35,15 @@
                 <div class="col-md-6">
                     <div class="form-label">Site Favicon</div>
 
-                    @if(config('settings.site_favicon'))
+                    @if(!empty($settings['site_favicon']))
                         <div class="mb-3">
-                            <img src="{{ asset(config('settings.site_favicon')) }}"
+                            <img src="{{ asset($settings['site_favicon']) }}"
                                  alt="Site Favicon"
                                  style="max-width: 80px; height: auto; border: 1px solid #ddd; padding: 8px; border-radius: 6px;">
+                        </div>
+                    @else
+                        <div class="mb-3 text-muted">
+                            No favicon uploaded yet.
                         </div>
                     @endif
 

@@ -24,7 +24,8 @@ class SettingController extends Controller
 
     function index()
     {
-        return view('admin.settings.sections.general-settings');
+          $settings = Setting::pluck('value', 'key')->toArray();
+        return view('admin.settings.sections.general-settings', compact('settings'));
     }
 
 
@@ -59,7 +60,8 @@ class SettingController extends Controller
 
     function commissionSettingsIndex()
     {
-        return view('admin.settings.sections.commission-settings');
+         $settings = Setting::pluck('value', 'key')->toArray();
+        return view('admin.settings.sections.commission-settings', compact('settings'));
     }
 
     function commissionSettings(Request $request)
@@ -122,7 +124,8 @@ class SettingController extends Controller
 
     function logoSettingsIndex()
     {
-        return view('admin.settings.sections.logo-settings');
+        $settings = Setting::pluck('value', 'key')->toArray();
+        return view('admin.settings.sections.logo-settings', compact('settings'));
     }
 
     function logoSettings(Request $request)

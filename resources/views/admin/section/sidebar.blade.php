@@ -329,6 +329,54 @@
 
 
 
+                       @if (hasPermission(['Category Management', 'Tags Management', 'Brand Management']))
+                          <li
+                              class="nav-item dropdown {{ setActive(['admin.products.*', 'admin.categories.*', 'admin.brands.*', 'admin.tags.*', 'admin.reviews.*']) }}">
+                              <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                  data-bs-auto-close="false" role="button" aria-expanded="false">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                      <i class="ti ti-box"></i>
+                                  </span>
+                                  <span class="nav-link-title"> Manage Products </span>
+                              </a>
+
+
+                              <div
+                                  class="dropdown-menu {{ setActive(['admin.products.*', 'admin.categories.*', 'admin.brands.*', 'admin.tags.*', 'admin.reviews.*'], 'show') }}">
+                                  <div class="dropdown-menu-columns">
+
+
+
+
+                                      @if (hasPermission(['Category Management']))
+                                          <div class="dropdown-menu-column">
+                                              <a class="dropdown-item {{ setActive(['admin.categories.*']) }}"
+                                                  href="{{ route('admin.categories.index') }}">
+                                                  Categories
+                                              </a>
+                                          </div>
+                                      @endif
+
+
+
+
+
+
+
+
+                                    
+
+                                  </div>
+                              </div>
+                          </li>
+                      @endif
+
+
+
+
+
+
+
 
 
 

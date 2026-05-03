@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\KycRequestController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\UserRoleController;
@@ -97,5 +98,14 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
     Route::put('/site-settings', [SettingController::class, 'siteSettings'])->name('site-settings.store');
     Route::get('/logo-settings', [SettingController::class, 'logoSettingsIndex'])->name('logo-settings.index');
     Route::put('/logo-settings', [SettingController::class, 'logoSettings'])->name('logo-settings.store');
+
+    /** Categories Routes */
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/nested', [CategoryController::class, 'getNestedCategories'])->name('categories.nested');
+    Route::post('/categories/update-order', [CategoryController::class, 'updateOrder'])->name('categories.update-order');
+    Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
 });

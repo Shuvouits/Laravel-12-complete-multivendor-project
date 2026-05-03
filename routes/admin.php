@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\KycRequestController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\backend\RoleController;
+use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,8 +63,6 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
     Route::get('/kyc-requests/download/{kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
     Route::put('/kyc-requests/{kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
 
-
-
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -89,6 +88,14 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
     Route::resource('/role', RoleController::class);
     Route::resource('/role-users', UserRoleController::class);
 
+    /** Settings Routes */
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::put('/settings/general-settings', [SettingController::class, 'generalSettings'])->name('settings.general');
+    Route::get('/commission-settings', [SettingController::class, 'commissionSettingsIndex'])->name('commission-settings.index');
+    Route::put('/commission-settings', [SettingController::class, 'commissionSettings'])->name('commission-settings.store');
+    Route::get('/site-settings', [SettingController::class, 'siteSettingsIndex'])->name('site-settings.index');
+    Route::put('/site-settings', [SettingController::class, 'siteSettings'])->name('site-settings.store');
+    Route::get('/logo-settings', [SettingController::class, 'logoSettingsIndex'])->name('logo-settings.index');
+    Route::put('/logo-settings', [SettingController::class, 'logoSettings'])->name('logo-settings.store');
+
 });
-
-

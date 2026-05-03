@@ -316,6 +316,19 @@
 
 
 
+                  @if (hasPermission(['Settings Management']))
+                          <li class="nav-item">
+                              <a class="nav-link {{ setActive(['admin.settings.*']) }}"
+                                  href="{{ route('admin.settings.index') }}">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block"><i
+                                          class="ti ti-settings"></i></span>
+                                  <span class="nav-link-title"> Settings </span>
+                              </a>
+                          </li>
+                      @endif
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-<html lang="en" data-bs-theme="dark" data-bs-theme-base="stone">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -7,6 +7,7 @@
     <title>Admin Dashboard</title>
 
     @include('admin.section.link')
+
 
     <style>
         *,

@@ -12,10 +12,13 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\KycRequestController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SettingController;
+use App\Http\Controllers\backend\TagController;
 use App\Http\Controllers\backend\UserRoleController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -107,5 +110,11 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    /** Tags Routes */
+    Route::resource('/tags', TagController::class);
+
+    /** Brand Routes */
+    Route::resource('/brands', BrandController::class);
 
 });

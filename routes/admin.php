@@ -14,6 +14,8 @@ use App\Http\Controllers\admin\KycRequestController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\ProductContoller;
+use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\TagController;
@@ -116,5 +118,18 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
 
     /** Brand Routes */
     Route::resource('/brands', BrandController::class);
+
+
+      /** Product Routes */
+        Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+        Route::get('/products/{type}/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products/{type}/create', [ProductController::class, 'store'])->name('products.store');
+
+        Route::get('/products/physical/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::post('/products/physical/{product}/update', [ProductController::class, 'update'])->name('products.update');
+        Route::post('/products/images/upload/{product}', [ProductController::class, 'uploadImages'])->name('products.images.upload');
+        Route::delete('/products/images/{image}', [ProductController::class, 'destroyImage'])->name('products.images.destroy');
+        Route::post('/products/images/reorder', [ProductController::class, 'imagesReorder'])->name('products.images.reorder');
 
 });

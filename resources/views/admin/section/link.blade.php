@@ -21,91 +21,106 @@
 
 <!-- BEGIN CUSTOM FONT -->
 <style>
-  @import url("https://rsms.me/inter/inter.css");
+    @import url("https://rsms.me/inter/inter.css");
 </style>
 <!-- END CUSTOM FONT -->
 
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css" />
 
 
 
- <!-- SweetAlert2 CSS -->
- <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
- <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
- <style>
-     .swal2-popup.swal2-toast.custom-toast {
-         width: 360px !important;
-         padding: 14px 16px !important;
-         border-radius: 16px !important;
-         background: #111827 !important;
-         color: #fff !important;
-         box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22) !important;
-         border: 1px solid rgba(255, 255, 255, 0.08) !important;
-         backdrop-filter: blur(10px);
-     }
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-     .swal2-toast .swal2-title {
-         font-size: 14px !important;
-         font-weight: 600 !important;
-         line-height: 1.45 !important;
-         margin: 0 !important;
-         color: #fff !important;
-     }
-
-     .swal2-toast .swal2-html-container {
-         font-size: 13px !important;
-         line-height: 1.5 !important;
-         margin: 4px 0 0 0 !important;
-         color: rgba(255, 255, 255, 0.82) !important;
-     }
-
-     .swal2-toast .swal2-icon {
-         margin: 0 10px 0 0 !important;
-         position: relative !important;
-         transform: scale(0.55) !important;
-         transform-origin: center center !important;
-         flex-shrink: 0 !important;
-     }
-
-     .swal2-toast .swal2-timer-progress-bar {
-         background: rgba(255, 255, 255, 0.2) !important;
-         height: 3px !important;
-     }
-
-     .swal2-toast.swal2-show {
-         animation: toastIn 0.35s ease;
-     }
-
-     .swal2-toast.swal2-hide {
-         animation: toastOut 0.2s ease forwards;
-     }
+  <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
 
+</head>
 
-     @keyframes toastIn {
-         from {
-             opacity: 0;
-             transform: translate3d(20px, 0, 0) scale(0.96);
-         }
+<style>
+    .swal2-popup.swal2-toast.custom-toast {
+        width: 360px !important;
+        padding: 14px 16px !important;
+        border-radius: 16px !important;
+        background: #111827 !important;
+        color: #fff !important;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(10px);
+    }
 
-         to {
-             opacity: 1;
-             transform: translate3d(0, 0, 0) scale(1);
-         }
-     }
+    .swal2-toast .swal2-title {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        line-height: 1.45 !important;
+        margin: 0 !important;
+        color: #fff !important;
+    }
 
-     @keyframes toastOut {
-         from {
-             opacity: 1;
-             transform: translate3d(0, 0, 0) scale(1);
-         }
+    .swal2-toast .swal2-html-container {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        margin: 4px 0 0 0 !important;
+        color: rgba(255, 255, 255, 0.82) !important;
+    }
 
-         to {
-             opacity: 0;
-             transform: translate3d(20px, 0, 0) scale(0.98);
-         }
-     }
- </style>
+    .swal2-toast .swal2-icon {
+        margin: 0 10px 0 0 !important;
+        position: relative !important;
+        transform: scale(0.55) !important;
+        transform-origin: center center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .swal2-toast .swal2-timer-progress-bar {
+        background: rgba(255, 255, 255, 0.2) !important;
+        height: 3px !important;
+    }
+
+    .swal2-toast.swal2-show {
+        animation: toastIn 0.35s ease;
+    }
+
+    .swal2-toast.swal2-hide {
+        animation: toastOut 0.2s ease forwards;
+    }
+
+
+
+    @keyframes toastIn {
+        from {
+            opacity: 0;
+            transform: translate3d(20px, 0, 0) scale(0.96);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+    }
+
+    @keyframes toastOut {
+        from {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        to {
+            opacity: 0;
+            transform: translate3d(20px, 0, 0) scale(0.98);
+        }
+    }
+
+     .ck-editor__editable_inline {
+        min-height: 300px;
+    }
+
+
+</style>
+
+ @stack('styles')

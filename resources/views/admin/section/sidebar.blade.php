@@ -229,108 +229,120 @@
          <div class="collapse navbar-collapse" id="sidebar-menu">
 
 
-            <!-- BEGIN NAVBAR MENU -->
-<ul class="navbar-nav pt-lg-3">
+             <!-- BEGIN NAVBAR MENU -->
+             <ul class="navbar-nav pt-lg-3">
 
-    {{-- Dashboard --}}
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                <i class="bi bi-house-door"></i>
-            </span>
-            <span class="nav-link-title"> Home </span>
-        </a>
-    </li>
+                 {{-- Dashboard --}}
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                         <span class="nav-link-icon d-md-none d-lg-inline-block">
+                             <i class="bi bi-house-door"></i>
+                         </span>
+                         <span class="nav-link-title"> Home </span>
+                     </a>
+                 </li>
 
-    {{-- KYC --}}
-    @if (hasPermission(['KYC Management']))
-        <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
-            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    <i class="bi bi-person-check"></i>
-                </span>
-                <span class="nav-link-title"> KYC Requests </span>
-            </a>
+                 {{-- KYC --}}
+                 @if (hasPermission(['KYC Management']))
+                     <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
+                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown">
+                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                 <i class="bi bi-person-check"></i>
+                             </span>
+                             <span class="nav-link-title"> KYC Requests </span>
+                         </a>
 
-            <div class="dropdown-menu {{ setActive(['admin.kyc.*'], 'show') }}">
-                <a class="dropdown-item" href="{{ route('admin.kyc.index') }}">All Requests</a>
-                <a class="dropdown-item" href="{{ route('admin.kyc.pending') }}">Pending Requests</a>
-                <a class="dropdown-item" href="{{ route('admin.kyc.rejected') }}">Rejected Requests</a>
-            </div>
-        </li>
-    @endif
+                         <div class="dropdown-menu {{ setActive(['admin.kyc.*'], 'show') }}">
+                             <a class="dropdown-item" href="{{ route('admin.kyc.index') }}">All Requests</a>
+                             <a class="dropdown-item" href="{{ route('admin.kyc.pending') }}">Pending Requests</a>
+                             <a class="dropdown-item" href="{{ route('admin.kyc.rejected') }}">Rejected Requests</a>
+                         </div>
+                     </li>
+                 @endif
 
-    {{-- Access Management --}}
-    @if (hasPermission(['Role Management', 'Role User Management']))
-        <li class="nav-item dropdown {{ setActive(['admin.role.*', 'admin.role-users.*']) }}">
-            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    <i class="bi bi-shield-lock"></i>
-                </span>
-                <span class="nav-link-title"> Access Management </span>
-            </a>
+                 {{-- Access Management --}}
+                 @if (hasPermission(['Role Management', 'Role User Management']))
+                     <li class="nav-item dropdown {{ setActive(['admin.role.*', 'admin.role-users.*']) }}">
+                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown">
+                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                 <i class="bi bi-shield-lock"></i>
+                             </span>
+                             <span class="nav-link-title"> Access Management </span>
+                         </a>
 
-            <div class="dropdown-menu {{ setActive(['admin.role.*', 'admin.role-users.*'], 'show') }}">
-                @if (hasPermission(['Role Management']))
-                    <a class="dropdown-item" href="{{ route('admin.role.index') }}">Role</a>
-                @endif
+                         <div class="dropdown-menu {{ setActive(['admin.role.*', 'admin.role-users.*'], 'show') }}">
+                             @if (hasPermission(['Role Management']))
+                                 <a class="dropdown-item" href="{{ route('admin.role.index') }}">Role</a>
+                             @endif
 
-                @if (hasPermission(['Role User Management']))
-                    <a class="dropdown-item" href="{{ route('admin.role-users.index') }}">Role Users</a>
-                @endif
-            </div>
-        </li>
-    @endif
+                             @if (hasPermission(['Role User Management']))
+                                 <a class="dropdown-item" href="{{ route('admin.role-users.index') }}">Role Users</a>
+                             @endif
+                         </div>
+                     </li>
+                 @endif
 
-    {{-- Settings --}}
-    @if (hasPermission(['Settings Management']))
-        <li class="nav-item">
-            <a class="nav-link {{ setActive(['admin.settings.*']) }}"
-                href="{{ route('admin.settings.index') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    <i class="bi bi-gear"></i>
-                </span>
-                <span class="nav-link-title"> Settings </span>
-            </a>
-        </li>
-    @endif
+                 {{-- Settings --}}
+                 @if (hasPermission(['Settings Management']))
+                     <li class="nav-item">
+                         <a class="nav-link {{ setActive(['admin.settings.*']) }}"
+                             href="{{ route('admin.settings.index') }}">
+                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                 <i class="bi bi-gear"></i>
+                             </span>
+                             <span class="nav-link-title"> Settings </span>
+                         </a>
+                     </li>
+                 @endif
 
-    {{-- Products --}}
-    @if (hasPermission(['Category Management', 'Tags Management', 'Brand Management']))
-        <li class="nav-item dropdown {{ setActive(['admin.products.*', 'admin.categories.*', 'admin.brands.*', 'admin.tags.*', 'admin.reviews.*']) }}">
-            <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    <i class="bi bi-box-seam"></i>
-                </span>
-                <span class="nav-link-title"> Manage Products </span>
-            </a>
+                 {{-- Products --}}
+                 @if (hasPermission(['Category Management', 'Tags Management', 'Brand Management']))
+                     <li
+                         class="nav-item dropdown {{ setActive(['admin.products.*', 'admin.categories.*', 'admin.brands.*', 'admin.tags.*', 'admin.reviews.*']) }}">
+                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown">
+                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                 <i class="bi bi-box-seam"></i>
+                             </span>
+                             <span class="nav-link-title"> Manage Products </span>
+                         </a>
 
-            <div class="dropdown-menu {{ setActive(['admin.products.*', 'admin.categories.*', 'admin.brands.*', 'admin.tags.*', 'admin.reviews.*'], 'show') }}">
+                         <div
+                             class="dropdown-menu {{ setActive(['admin.products.*', 'admin.categories.*', 'admin.brands.*', 'admin.tags.*', 'admin.reviews.*'], 'show') }}">
 
-                @if (hasPermission(['Category Management']))
-                    <a class="dropdown-item" href="{{ route('admin.categories.index') }}">
-                        Categories
-                    </a>
-                @endif
 
-                @if (hasPermission(['Tags Management']))
-                    <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
-                        Products Tags
-                    </a>
-                @endif
+                             @if (hasPermission(['Product Management']))
+                                 <div class="dropdown-menu-column">
+                                     <a class="dropdown-item {{ setActive(['admin.products.*']) }}"
+                                         href="{{ route('admin.products.index') }}">
+                                         Products
+                                     </a>
+                                 </div>
+                             @endif
 
-                @if (hasPermission(['Brand Management']))
-                    <a class="dropdown-item" href="{{ route('admin.brands.index') }}">
-                        Brands
-                    </a>
-                @endif
+                             @if (hasPermission(['Category Management']))
+                                 <a class="dropdown-item" href="{{ route('admin.categories.index') }}">
+                                     Categories
+                                 </a>
+                             @endif
 
-            </div>
-        </li>
-    @endif
+                             @if (hasPermission(['Tags Management']))
+                                 <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
+                                     Products Tags
+                                 </a>
+                             @endif
 
-</ul>
-<!-- END NAVBAR MENU -->
+                             @if (hasPermission(['Brand Management']))
+                                 <a class="dropdown-item" href="{{ route('admin.brands.index') }}">
+                                     Brands
+                                 </a>
+                             @endif
+
+                         </div>
+                     </li>
+                 @endif
+
+             </ul>
+             <!-- END NAVBAR MENU -->
 
 
 
